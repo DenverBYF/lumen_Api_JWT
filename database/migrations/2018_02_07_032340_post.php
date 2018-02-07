@@ -19,8 +19,9 @@ class Post extends Migration
 			$table->integer('uid');
 			$table->string('title', 30);
 			$table->longText('content');
-			$table->integer('view');	//浏览量
-			$table->integer('like');	//点赞数
+			$table->integer('view')->defaule(0);	//浏览量
+			$table->integer('like')->default(0);	//点赞数
+			$table->integer('comment')->default(0);	//评论数
 			$table->timestamps();
 		});
     }

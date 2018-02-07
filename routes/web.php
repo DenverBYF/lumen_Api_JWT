@@ -24,4 +24,5 @@ $router->group(['prefix' => 'post'], function () use ($router) {
 	$router->put('/{id}', ['uses' => 'PostController@update', 'middleware' => 'auth']);
 	$router->delete('/{id}', ['uses' => 'PostController@delete', 'middleware' => 'auth']);
 	$router->get('/like/{id}', ['uses' => 'PostController@like', 'middleware' => 'auth']);
+	$router->post('/comment/{id}', ['uses' => 'PostController@comment', 'middleware' => 'auth']);
 });
