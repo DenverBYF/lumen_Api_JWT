@@ -26,3 +26,9 @@ $router->group(['prefix' => 'post'], function () use ($router) {
 	$router->get('/like/{id}', ['uses' => 'PostController@like', 'middleware' => 'auth']);
 	$router->post('/comment/{id}', ['uses' => 'PostController@comment', 'middleware' => 'auth']);
 });
+
+$router->group(['prefix' => 'user'], function () use ($router) {
+	$router->get('/', ['uses' => 'UserController@index']);
+	$router->get('/{id}', ['uses' => 'UserController@show']);
+	$router->get('/follow/{id}', ['uses' => 'UserController@follow']);
+});

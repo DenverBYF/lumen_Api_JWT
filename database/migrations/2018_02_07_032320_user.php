@@ -19,6 +19,7 @@ class User extends Migration
 			$table->string('name', 20)->index();
 			$table->string('email');
 			$table->char('password', 40);
+			$table->integer('follow')->default(0);
 			$table->timestamps();
 		});
     }
