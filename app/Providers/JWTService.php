@@ -8,9 +8,11 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\DB;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\ValidationData;
+use Lcobucci\JWT\Parser;
 
 trait JWTService
 {
@@ -34,7 +36,7 @@ trait JWTService
 		$data->setId(env('JWT_ID', '123456abc'));
 		try {
 			$token = (new Parser())->parse((string) $token);    //获取JWT token
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			return false;
 		}
 		$sign = new Sha256();
@@ -47,5 +49,11 @@ trait JWTService
 		} else {
 			return false;
 		}
+	}
+
+	public function getUser($token) {
+		$userId = $this->checkToken($token);
+		$user = DB::table('users')->select(['id', 'name', 'email'])->where('id', $userId)->first();
+		return $user;
 	}
 }

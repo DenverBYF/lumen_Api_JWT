@@ -16,4 +16,12 @@ $router->get('/', function () use ($router) {
 });
 
 $router->post('/register', ['uses' => 'RegisterController@index']);
-$router->post('/login', ['uses' => 'LoginController@index']);
+$router->post('/login', ['uses' => 'LoginController@index' ]);
+$router->group(['prefix' => 'post'], function () use ($router) {
+	$router->get('/', ['uses' => 'PostController@index']);
+	$router->get('/{id}', ['uses' => 'PostController@show']);
+	$router->post('/', ['uses' => 'PostController@create', 'middleware' => 'auth']);
+	$router->put('/{id}', ['uses' => 'PostController@update', 'middleware' => 'auth']);
+	$router->delete('/{id}', ['uses' => 'PostController@delete', 'middleware' => 'auth']);
+	$router->get('/like/{id}', ['uses' => 'PostController@like', 'middleware' => 'auth']);
+});

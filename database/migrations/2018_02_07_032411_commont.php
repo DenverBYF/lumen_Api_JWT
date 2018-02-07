@@ -14,7 +14,7 @@ class Commont extends Migration
     public function up()
     {
         //
-		Schema::create('commonts', function (Blueprint $table) {
+		Schema::create('comments', function (Blueprint $table) {
 			$table->increments('id');
 			$table->integer('pid');
 			$table->integer('uid');
@@ -31,6 +31,6 @@ class Commont extends Migration
     public function down()
     {
         //
-		Schema::drop('commonts');
+		Schema::drop('comments');
     }
 }

@@ -35,10 +35,11 @@ class LoginController extends Controller
 		$password = sha1($request->get('password'));
 		$user = DB::table('users')->select(['password', 'id'])->where('email', $email)->first();
 		if ($user->password === $password) {
-			$token = $this->getToken($user->id);		//用该用户的唯一id获取JWT的token
+			$token = $this->getToken($user->id);		//用该用户的唯一id获取JWT的token对象
+			$token = (string) $token;					//获取token的字符串值
 			return response()->json(['code' => 0,
 				'msg' => 'success',
-				'data' => ['token' => $token->getPayload()]		//返回token值
+				'data' => ['token' => $token]		//返回token值
 			]);
 		} else {
 			return response()->json(['code' => 0, 'msg' => 'password wrong']);
