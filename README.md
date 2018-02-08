@@ -30,40 +30,6 @@ MAIL_OPEN=0		//默认不开启邮件功能  MAIL_DRIVER=smtp
 ###待完善
 加缓存，邮件发送异步队列等
 ###Api文档
-* 用户注册:
-	* url : http://api.app/
-	* method : POST
-	* param : email => 邮箱 ； name => 用户名 ； password => 密码
-	* return : JSON
+[Api文档链接](http://showdoc.fenlan96.com/index.php?s=/13)
 
-code | msg | data |
-------- | ------- | ------- 
-0 | success | null
--1| request data error | "name": ["The name has already been taken."],"email": ["The email has already been taken."]
--2 | fail| null
-
-* 用户登录
-	* url : http://api.app/login
-	* method : POST
-	* param : email => 邮箱 ； password => 密码
-	* return : JSON
-	
-code | msg | data |
-------- | ------- | ------- 
-0 | success |  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImlzcyI6IkRlbnZlckIiLCJqdGkiOiIxMjM0NTZhYmNkZWZnIn0.eyJpc3MiOiJEZW52ZXJCIiwiYXVkIjoiVEciLCJqdGkiOiIxMjM0NTZhYmNkZWZnIiwiaWF0IjoxNTE4MDU1MTY2LCJleHAiOjE1MTgxNDE1NjYsInVpZCI6MX0.9NXNbD20DgnFOtRwl-HAXBIkYfWtTsLjC7cMG7Lc2ZE"
--1| request data error | "password": ["The password field is required."]
--2 | fail| password wrong
-	
-* 文章相关
-	1. 新建文章
-		* url : http://api.app/post/
-		* method : POST
-		* param : title => 标题 ; content => 内容
-		* return : JSON
-		
-		code | msg | data |
-------- | ------- | ------- 
-0 | success | "id": 1
--1| request data error | "name": ["The name has already been taken."],"email": ["The email has already been taken."]
--2 | fail| null
 
