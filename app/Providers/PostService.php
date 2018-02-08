@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
  * */
 class PostService
 {
+	use MailService;
 	protected $post;
 	public function __construct($id = null)
 	{
@@ -62,12 +63,17 @@ class PostService
 	//点赞
 	public function like($uid)
 	{
+		$judge = DB::table('like')->where('pid', $this->id)->where('uid', $uid)->first();
+		if (!empty($judge)) {
+			return $this->errorReturn(-3, "已点赞过此文章");
+		}
 		DB::table('posts')->increment('like', 1, ['id' => $this->id]);
 		$row = DB::table('like')->insert([
 			'pid' => $this->id,
 			'uid' => $uid
 		]);
 		if ($row) {
+			$this->mail($this->id, "您的文章%s有新的点赞", "文章消息提醒");
 			return $this->jsonReturn(['id' => $this->id]);
 		} else {
 			return $this->errorReturn();
@@ -79,6 +85,7 @@ class PostService
 		DB::table('posts')->increment('comment', 1, ['id' => $this->id]);
 		$row = DB::table('comments')->insert($data);
 		if ($row) {
+			$this->mail($this->id, "您的文章%s有新的评论", "文章消息提醒");
 			return $this->jsonReturn(['id' => $this->id]);
 		} else {
 			return $this->errorReturn();
@@ -95,4 +102,18 @@ class PostService
 		return response()->json(['code' => $code, 'msg' => $msg]);
 	}
 
+	protected function mail($pid, $content, $title)
+	{
+		if (env('MAIL_OPEN') == 0){	//未开启通知
+			return ;
+		} else {
+			$info = DB::table('users')
+						->join('posts', 'uid', '=', 'users.id')
+						->select('users.email', 'posts.title')
+						->where('posts.id', $pid)
+						->first();
+			$content = sprintf($content, $info->title);
+			$this->sendMail($info->email, $content, $title);
+		}
+	}
 }

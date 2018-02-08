@@ -10,12 +10,13 @@ namespace App\Http\Controllers;
 
 
 use App\Providers\JWTService;
+use App\Providers\MailService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
-	use JWTService;
+	use JWTService, MailService;
 	public function index()
 	{
 		$users = DB::table('users')->select(['id', 'name', 'email'])->get();
@@ -46,15 +47,30 @@ class UserController extends Controller
 	public function follow(Request $request, $id)
 	{
 		$user = $this->getUser($request->header('Authorization'));
+		$judge = DB::table('follow')->where('fid', $id)->where('uid', $user->id)->first();
+		if (!empty($judge)) {
+			return response()->json(['code' => -3, 'msg' => '已关注过此用户']);
+		}
 		DB::table('users')->increment('follow', 1, ['id' => $id]);
 		$row = DB::table('follow')->insert([
 			'fid' => $id,
 			'uid' => $user->id
 		]);
 		if ($row) {
+			$this->mail($id, "用户".$user->name."关注了你", "消息提醒");
 			return response()->json(['code' => 0, 'msg' => 'success']);
 		} else {
 			return response()->json(['code' => -2, 'msg' => 'fail']);
+		}
+	}
+
+	protected function mail($toUser, $content, $title)
+	{
+		if (env('MAIL_OPEN') == 0) {
+			return ;
+		} else {
+			$toUser = DB::table('users')->select('email')->where('id', $toUser)->first();
+			$this->sendMail($toUser->email, $content, $title);
 		}
 	}
 }
