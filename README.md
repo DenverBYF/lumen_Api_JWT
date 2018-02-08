@@ -7,9 +7,9 @@ composer
 mysql
 openssl_extension
 ### 使用
-`git clone https://github.com/DenverBYF/lumen_Api_JWT.git`
-`composer install`
-`cp .env.example .env`
+`git clone https://github.com/DenverBYF/lumen_Api_JWT.git`  
+`composer install`  
+`cp .env.example .env`  
 配置.env文件，配置数据库信息，如果需要开启邮件通知服务，需配置MAIL_OPEN=1，并配置相关邮件信息。配置JWT相关信息(随意写)。
 ```
 MAIL_OPEN=0		//默认不开启邮件功能  MAIL_DRIVER=smtp
@@ -26,13 +26,16 @@ MAIL_OPEN=0		//默认不开启邮件功能  MAIL_DRIVER=smtp
 
 ```
 
-###功能
+### 功能  
+
 注册，登录，文章CURD，评论，点赞，关注，邮件通知（文章收到点赞，评论，收到用户关注时发送通知）
 
-###待完善
+### 待完善  
+
 加缓存，邮件发送异步队列等
 
-###Api文档
+### Api文档  
+
 [Api文档链接](http://showdoc.fenlan96.com/index.php?s=/13)
 
 
