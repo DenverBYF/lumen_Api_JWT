@@ -10,7 +10,8 @@ openssl_extension
 `git clone https://github.com/DenverBYF/lumen_Api_JWT.git`  
 `composer install`  
 `cp .env.example .env`  
-配置.env文件，配置数据库信息，如果需要开启邮件通知服务，需配置MAIL_OPEN=1，并配置相关邮件信息。配置JWT相关信息(随意写)。
+配置.env文件，配置数据库信息，如果需要开启邮件通知服务，需配置MAIL_OPEN=1，并配置相关邮件信息。配置JWT相关信息(随意写)。  
+`php artisan migrate`
 ```
 MAIL_OPEN=0		//默认不开启邮件功能  MAIL_DRIVER=smtp
  MAIL_HOST=smtp.mailtrap.io
