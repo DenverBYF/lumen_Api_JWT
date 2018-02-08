@@ -25,10 +25,13 @@ MAIL_OPEN=0		//默认不开启邮件功能  MAIL_DRIVER=smtp
  JWT_SIGN=		//签名
 
 ```
+
 ###功能
 注册，登录，文章CURD，评论，点赞，关注，邮件通知（文章收到点赞，评论，收到用户关注时发送通知）
+
 ###待完善
 加缓存，邮件发送异步队列等
+
 ###Api文档
 [Api文档链接](http://showdoc.fenlan96.com/index.php?s=/13)
 
