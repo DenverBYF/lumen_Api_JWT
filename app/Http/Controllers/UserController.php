@@ -51,7 +51,8 @@ class UserController extends Controller
 		if (!empty($judge)) {
 			return response()->json(['code' => -3, 'msg' => '已关注过此用户']);
 		}
-		DB::table('users')->increment('follow', 1, ['id' => $id]);
+		$toUser = DB::table('users')->where('id', $id)->first();
+		DB::table('users')->where('id', $toUser->id)->update(['follow' => $toUser->follow + 1]);
 		$row = DB::table('follow')->insert([
 			'fid' => $id,
 			'uid' => $user->id

@@ -40,7 +40,7 @@ class RegisterController extends Controller
 		if ($row) {
 			return response()->json(['code' => 0, 'msg' => 'success']);
 		} else {
-			return response()->json(['code' => -1, 'msg' => 'fail']);
+			return response()->json(['code' => -2, 'msg' => 'fail']);
 		}
 	}
 }

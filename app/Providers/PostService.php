@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 class PostService
 {
 	use MailService;
-	protected $post;
+	protected $post, $id;
 	public function __construct($id = null)
 	{
 		$this->id = $id;	//文章唯一id
@@ -26,7 +26,7 @@ class PostService
 	public function find()
 	{
 		$post = DB::table('posts')->where('id', $this->id)->first();
-		DB::table('posts')->increment('view', 1, ['id' => $this->id]);		//添加浏览量
+		DB::table('posts')->where('id', $post->id)->update(['view' => $post->view + 1]);
 		return $this->jsonReturn($post);
 	}
 
@@ -67,7 +67,8 @@ class PostService
 		if (!empty($judge)) {
 			return $this->errorReturn(-3, "已点赞过此文章");
 		}
-		DB::table('posts')->increment('like', 1, ['id' => $this->id]);
+		$post = DB::table('posts')->where('id', $this->id)->first();
+		DB::table('posts')->where('id', $post->id)->update(['like' => $post->like + 1]);
 		$row = DB::table('like')->insert([
 			'pid' => $this->id,
 			'uid' => $uid
@@ -82,7 +83,8 @@ class PostService
 
 	public function comment($data)
 	{
-		DB::table('posts')->increment('comment', 1, ['id' => $this->id]);
+		$post = DB::table('posts')->where('id', $this->id)->first();
+		DB::table('posts')->where('id', $post->id)->update(['comment' => $post->comment + 1]);
 		$row = DB::table('comments')->insert($data);
 		if ($row) {
 			$this->mail($this->id, "您的文章%s有新的评论", "文章消息提醒");

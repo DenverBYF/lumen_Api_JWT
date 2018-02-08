@@ -61,7 +61,7 @@ class PostController extends Controller
 	public function update($id)
 	{
 		if ($this->judge($id)) {
-			return response()->json(['code' => -3, 'not writer of this article']);
+			return response()->json(['code' => -3, 'msg' => 'not writer of this article']);
 		}
 		try {
 			$this->validate($this->request, [
@@ -81,7 +81,7 @@ class PostController extends Controller
 	public function delete($id)
 	{
 		if ($this->judge($id)) {
-			return response()->json(['code' => -3, 'not writer of this article']);
+			return response()->json(['code' => -3, 'msg' => 'not writer of this article']);
 		}
 		$postService = new PostService($id);
 		return $postService->delete();

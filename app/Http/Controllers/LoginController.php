@@ -42,7 +42,7 @@ class LoginController extends Controller
 				'data' => ['token' => $token]		//返回token值
 			]);
 		} else {
-			return response()->json(['code' => -1, 'msg' => 'password wrong']);
+			return response()->json(['code' => -2, 'msg' => 'password wrong']);
 		}
 	}
 }
